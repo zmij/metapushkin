@@ -5,14 +5,14 @@
  *      Author: zmij
  */
 
-#ifndef WIRE_UTIL_FUNCTION_TRAITS_HPP_
-#define WIRE_UTIL_FUNCTION_TRAITS_HPP_
+#ifndef PSST_META_FUNCTION_TRAITS_HPP_
+#define PSST_META_FUNCTION_TRAITS_HPP_
 
 #include <tuple>
-#include <wire/util/meta_helpers.hpp>
+#include <pushkin/meta/index_tuple.hpp>
 
-namespace wire {
-namespace util {
+namespace psst {
+namespace meta {
 
 namespace detail {
 
@@ -39,7 +39,7 @@ public:
 }  // namespace detail
 
 template < typename T >
-struct is_callable : ::std::conditional<
+struct is_callable_object : ::std::conditional<
     ::std::is_class< T >::value,
     detail::has_call_operator< T >,
     ::std::is_function<T> >::type {
@@ -188,7 +188,7 @@ struct call_operator_traits : function_traits< decltype(&T::operator()) > {};
 template < typename T >
 struct function_traits<T> :
     ::std::conditional<
-        is_callable< T >::value,
+        is_callable_object< T >::value,
         call_operator_traits< T >,
         not_a_function<T> >::type {};
 
@@ -234,7 +234,7 @@ invoke(Func func, T&& ... args)
     return detail::invoke(func, index_type{}, ::std::forward<T>(args) ...);
 }
 
-}  // namespace util
-}  // namespace wire
+}  // namespace meta
+}  // namespace psst
 
-#endif /* WIRE_UTIL_FUNCTION_TRAITS_HPP_ */
+#endif /* PSST_META_FUNCTION_TRAITS_HPP_ */
