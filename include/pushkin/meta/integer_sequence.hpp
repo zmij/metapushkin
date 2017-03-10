@@ -5,10 +5,13 @@
  *      Author: zmij
  */
 
-#ifndef PUSHKIN_UTIL_INTEGER_SEQUENCE_HPP_
-#define PUSHKIN_UTIL_INTEGER_SEQUENCE_HPP_
+#ifndef PUSHKIN_META_INTEGER_SEQUENCE_HPP_
+#define PUSHKIN_META_INTEGER_SEQUENCE_HPP_
 
+#include <type_traits>
 #include <utility>
+
+#include <pushkin/meta/algorithm.hpp>
 
 namespace psst {
 namespace meta {
@@ -24,12 +27,21 @@ struct join < T > {
     using type = T;
 };
 
+template < typename T, typename U, typename ... V >
+struct join< T, U, V... >
+    : join< typename join< T, U >::type, V... > {};
+
 #if __cplusplus >= 201402L
 
 template < typename T, T ... A, T... B >
 struct join< ::std::integer_sequence<T, A...>, ::std::integer_sequence<T, B...> > {
     using type = ::std::integer_sequence<T, A..., B...>;
 };
+
+template <typename T>
+struct is_empty<::std::integer_sequence<T>> : ::std::true_type {};
+template <typename T, T ... Values>
+struct is_empty<::std::integer_sequence<T, Values...>> : ::std::false_type {};
 
 namespace detail {
 
@@ -113,4 +125,4 @@ struct make_integer_sequence :
 } /* namespace meta */
 } /* namespace psst */
 
-#endif /* PUSHKIN_UTIL_INTEGER_SEQUENCE_HPP_ */
+#endif /* PUSHKIN_META_INTEGER_SEQUENCE_HPP_ */
