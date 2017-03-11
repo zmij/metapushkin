@@ -127,6 +127,13 @@ struct char_sequence_literal {
 
         return *lhs == 0;
     }
+
+    static constexpr char const*
+    static_begin()
+    { return value; }
+    static constexpr char const*
+    static_end()
+    { return value + size; }
 };
 
 template < char ... Chars >
@@ -468,6 +475,27 @@ struct make_char_literal<char_range<A, B>> {
             typename detail::unwrap_char_range< A, B >::type
         >::type;
 };
+
+//template < char const* Str >
+namespace detail {
+
+/**
+ * Make a char sequence literal from a pointer to char, compile-time
+ */
+template < char const* Str, typename T >
+struct make_char_literal_impl;
+
+template < char const* Str, ::std::size_t ... Indexes >
+struct make_char_literal_impl<Str, ::std::integer_sequence< ::std::size_t, Indexes... >> {
+    using type = char_sequence_literal< Str[Indexes]... >;
+};
+
+} /* namespace detail */
+
+
+template < char const* Str >
+using make_char_literal_s = typename detail::make_char_literal_impl<Str,
+        ::std::make_index_sequence<detail::strlen(Str)>>::type;
 
 #endif /* __cplusplus >= 201402L */
 
