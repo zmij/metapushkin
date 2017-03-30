@@ -38,6 +38,16 @@ struct join< ::std::integer_sequence<T, A...>, ::std::integer_sequence<T, B...> 
     using type = ::std::integer_sequence<T, A..., B...>;
 };
 
+template < typename T, T ... A, T B >
+struct join< ::std::integer_sequence<T, A...>, ::std::integral_constant<T, B > > {
+    using type = ::std::integer_sequence<T, A..., B>;
+};
+
+template < typename T, T A, T ...B >
+struct join< ::std::integral_constant<T, A>, ::std::integer_sequence<T, B...> > {
+    using type = ::std::integer_sequence<T, A, B...>;
+};
+
 template <typename T>
 struct is_empty<::std::integer_sequence<T>> : ::std::true_type {};
 template <typename T, T ... Values>
@@ -120,7 +130,44 @@ template < typename T, T Min, T Max >
 struct make_integer_sequence :
     detail::make_integer_sequence_impl<T, Min, Max, (Min > Max )> {};
 
+
+namespace detail {
+
+template < ::std::size_t Head, template <typename> class Predicate, typename ... T >
+struct find_index_if_impl;
+
+template < ::std::size_t Head, template <typename> class Predicate, typename T, typename ...Y >
+struct find_index_if_impl<Head, Predicate, T, Y...> :
+    ::std::conditional<
+            Predicate<T>::value,
+            typename join< ::std::integral_constant<::std::size_t, Head>,
+                    typename find_index_if_impl<Head + 1, Predicate, Y... >::type >::type,
+            typename find_index_if_impl<Head + 1, Predicate, Y...>::type
+        > {};
+
+template < ::std::size_t Head, template <typename> class Predicate, typename T >
+struct find_index_if_impl<Head, Predicate, T > :
+    ::std::conditional<
+            Predicate<T>::value,
+            ::std::index_sequence<Head>,
+            ::std::index_sequence<>
+        > {};
+
+} /* namespace detail */
+
+/**
+ * Metafunction to build index sequence of types matching predicate
+ */
+template < template <typename> class Predicate, typename ... T >
+struct find_index_if : detail::find_index_if_impl<0, Predicate, T...> {};
+
+template <template <typename> class Predicate>
+struct find_index_if<Predicate> {
+    using type = ::std::index_sequence<>;
+};
+
 #endif /* __cplusplus >= 201402L */
+
 
 } /* namespace meta */
 } /* namespace psst */
