@@ -30,6 +30,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 if (NOT CMAKE_CXX_STANDARD)
     set(CMAKE_CXX_STANDARD 11)
 endif()
+message(STATUS "C++ standard ${CMAKE_CXX_STANDARD}")
 add_definitions(-Wall -Werror -Wextra -pedantic -Weffc++)
 
 # Add subdirectories here
