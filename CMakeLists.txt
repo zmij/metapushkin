@@ -24,10 +24,12 @@ else()
     set(PROJECT_VERSION ${_pversion})
 endif()
 
-option(BUILD_TESTS "Build test programs" ON)
+option(META_BUILD_TESTS "Build test programs" ON)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-add_definitions("-std=c++11")
+if (NOT CMAKE_CXX_STANDARD)
+    set(CMAKE_CXX_STANDARD 11)
+endif()
 add_definitions(-Wall -Werror -Wextra -pedantic -Weffc++)
 
 # Add subdirectories here
@@ -35,7 +37,7 @@ add_definitions(-Wall -Werror -Wextra -pedantic -Weffc++)
 add_subdirectory(include)
 add_subdirectory(cmake)
 
-if (BUILD_TESTS)
+if (META_BUILD_TESTS)
     enable_testing()
     add_subdirectory(test)
 endif()

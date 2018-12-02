@@ -7,6 +7,7 @@ cmake_minimum_required(VERSION 2.6)
 
 if (NOT TARGET test-metapushkin)
 if (NOT GTEST_INCLUDE_DIRS)
+    # TODO Replace with external project
     find_package(GTest REQUIRED)
 endif()
 if (NOT CMAKE_THREAD_LIBS_INIT)
