@@ -11,7 +11,7 @@
 #include <type_traits>
 #include <utility>
 
-#include <pushkin/meta/algorithm.hpp>
+//#include <pushkin/meta/algorithm.hpp>
 
 namespace psst {
 namespace meta {
@@ -21,6 +21,8 @@ namespace meta {
  */
 template < typename ... T >
 struct join;
+template < typename ... T >
+using join_t = typename join<T...>::type;
 
 template < typename T >
 struct join < T > {
@@ -29,9 +31,7 @@ struct join < T > {
 
 template < typename T, typename U, typename ... V >
 struct join< T, U, V... >
-    : join< typename join< T, U >::type, V... > {};
-
-#if __cplusplus >= 201402L
+    : join< join_t< T, U >, V... > {};
 
 template < typename T, T ... A, T... B >
 struct join< ::std::integer_sequence<T, A...>, ::std::integer_sequence<T, B...> > {
@@ -47,11 +47,6 @@ template < typename T, T A, T ...B >
 struct join< ::std::integral_constant<T, A>, ::std::integer_sequence<T, B...> > {
     using type = ::std::integer_sequence<T, A, B...>;
 };
-
-template <typename T>
-struct is_empty<::std::integer_sequence<T>> : ::std::true_type {};
-template <typename T, T ... Values>
-struct is_empty<::std::integer_sequence<T, Values...>> : ::std::false_type {};
 
 namespace detail {
 
@@ -127,9 +122,11 @@ struct make_integer_sequence_impl<T, Min, Max, true> : reverse_unwrap_range<T, M
  * If Min > Max, the sequence will be reversed.
  */
 template < typename T, T Min, T Max >
-struct make_integer_sequence :
-    detail::make_integer_sequence_impl<T, Min, Max, (Min > Max )> {};
+using make_integer_sequence =
+    typename detail::make_integer_sequence_impl<T, Min, Max, (Min > Max )>::type;
 
+template <::std::size_t Min, ::std::size_t Max>
+using make_index_sequence = make_integer_sequence<::std::size_t, Min, Max>;
 
 namespace detail {
 
@@ -166,7 +163,10 @@ struct find_index_if<Predicate> {
     using type = ::std::index_sequence<>;
 };
 
-#endif /* __cplusplus >= 201402L */
+template <typename T, T A, T B>
+struct max : std::integral_constant<T, (A > B ? A : B)> {};
+template <typename T, T A, T B>
+struct min : std::integral_constant<T, (A < B ? A : B)> {};
 
 
 } /* namespace meta */
