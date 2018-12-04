@@ -644,17 +644,14 @@ struct invert : ::std::integral_constant<bool, !Predicate<T>::value> {};
 /**
  * Metafunction to compare two types using a Compare predicate.
  * If the Compare predicate is false for both ways of comparison,
- * the order of types is not changed.
+ * meaning the types are evaluated equal, the order of types is not changed.
  */
 template <template<typename, typename> class Compare, typename T, typename Y>
 struct stable_order {
     using forward = type_tuple<T, Y>;
     using reverse = type_tuple<Y, T>;
-    using type = ::std::conditional_t<
-                Compare<T, Y>::value,
-                forward,
-                ::std::conditional_t<
-                     Compare<Y, T>::value, reverse, forward>>;
+    static constexpr bool original_order = Compare<T, Y>::value || !Compare<Y, T>::value;
+    using type = ::std::conditional_t<original_order, forward, reverse>;
     using first = typename type::template type<0>;
     using second = typename type::template type<1>;
 };
@@ -689,20 +686,13 @@ struct merge_sorted<Compare, type_tuple<>, type_tuple<T...>> {
     using type = type_tuple<T...>;
 };
 
-
 template <template<typename, typename> class Compare, typename T1, typename ...TN, typename Y1, typename ... YN>
-struct merge_sorted<Compare, type_tuple<T1, TN...>, type_tuple<Y1, YN...>> {
-    using first_tuple_fist = combine_t< type_tuple<T1>, merge_sorted_t<Compare, type_tuple<TN...>, type_tuple<Y1, YN...> >>;
-    using second_tuple_first = combine_t< type_tuple<Y1>, merge_sorted_t<Compare, type_tuple<T1, TN...>, type_tuple<YN...> >>;
-    using type = std::conditional_t< Compare<T1, Y1>::value,
-            first_tuple_fist,
-            std::conditional_t<
-                Compare<Y1, T1>::value,
-                second_tuple_first,
-                first_tuple_fist
-            >
-        >;
-};
+struct merge_sorted<Compare, type_tuple<T1, TN...>, type_tuple<Y1, YN...>>
+    : ::std::conditional_t<
+        stable_order<Compare, T1, Y1>::original_order,
+        combine< type_tuple<T1>, merge_sorted_t<Compare, type_tuple<TN...>, type_tuple<Y1, YN...>> >,
+        combine< type_tuple<Y1>, merge_sorted_t<Compare, type_tuple<T1, TN...>, type_tuple<YN...>> >
+    > {};
 //@}
 
 //@{
@@ -727,9 +717,7 @@ template < template<typename, typename> class Compare, typename ... T >
 struct stable_sort<Compare, type_tuple<T...>> : stable_sort<Compare, T...> {};
 
 template < template<typename, typename> class Compare, typename T, typename Y >
-struct stable_sort<Compare, T, Y> {
-    using type = typename stable_order<Compare, T, Y>::type;
-};
+struct stable_sort<Compare, T, Y> : stable_order<Compare, T, Y> {};
 
 template < template<typename, typename> class Compare, typename T >
 struct stable_sort<Compare, T> {
