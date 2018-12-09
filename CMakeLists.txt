@@ -28,7 +28,7 @@ option(META_BUILD_TESTS "Build test programs" ON)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 if (NOT CMAKE_CXX_STANDARD)
-    set(CMAKE_CXX_STANDARD 14)
+    set(CMAKE_CXX_STANDARD 17)
 endif()
 message(STATUS "C++ standard ${CMAKE_CXX_STANDARD}")
 add_definitions(-Wall -Werror -Wextra -pedantic -Weffc++)

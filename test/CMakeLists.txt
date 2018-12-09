@@ -22,6 +22,7 @@ set(
     test_program_SRCS
     # Add your sources here
     static_tests.cpp
+    ascii_table_test.cpp
 )
 add_executable(test-metapushkin ${test_program_SRCS})
 target_link_libraries(

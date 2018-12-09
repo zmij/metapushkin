@@ -479,6 +479,10 @@ struct contains< T, unique<Y...> > : contains<T, Y...> {};
  */
 template < template <typename> class Predicate, typename ... T >
 struct all_match;
+template < template <typename> class Predicate, typename ... T >
+using all_match_t = typename all_match<Predicate, T...>::type;
+template < template <typename> class Predicate, typename ... T >
+constexpr bool all_match_v = all_match_t<Predicate, T...>::value;
 
 template < template <typename> class Predicate, typename T, typename ... Y >
 struct all_match< Predicate, T, Y... >
@@ -512,6 +516,10 @@ struct all_match< Predicate, type_tuple<T...> >
  */
 template < template <typename> class Predicate, typename ... T>
 struct any_match;
+template < template <typename> class Predicate, typename ... T>
+using any_match_t = typename any_match<Predicate, T...>::type;
+template < template <typename> class Predicate, typename ... T>
+constexpr bool any_match_v = any_match_t<Predicate, T...>::value;
 
 template < template <typename> class Predicate, typename T, typename ... Y >
 struct any_match< Predicate, T, Y... >
@@ -615,6 +623,8 @@ template < template<typename> class Predicate, typename ... T >
 struct transform {
     using type = type_tuple< typename Predicate<T>::type ... >;
 };
+template < template<typename> class Predicate, typename ... T >
+using transform_t = typename transform<Predicate, T...>::type;
 
 template < template<typename> class Predicate, typename ... T >
 struct transform < Predicate, type_tuple<T...> >
