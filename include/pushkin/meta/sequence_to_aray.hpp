@@ -8,8 +8,8 @@
 #ifndef PUSHKIN_META_SEQUENCE_TO_ARAY_HPP_
 #define PUSHKIN_META_SEQUENCE_TO_ARAY_HPP_
 
-#include <utility>
 #include <array>
+#include <utility>
 
 namespace psst::meta {
 
@@ -20,7 +20,6 @@ sequence_to_array(std::integer_sequence<T, Values...>)
     return std::array<T, sizeof...(Values)>{Values...};
 }
 
-}  // namespace psst::meta
-
+}    // namespace psst::meta
 
 #endif /* PUSHKIN_META_SEQUENCE_TO_ARAY_HPP_ */

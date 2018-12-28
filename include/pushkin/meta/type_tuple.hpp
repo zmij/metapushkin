@@ -9,16 +9,17 @@
 #define PUSHKIN_META_TYPE_TUPLE_HPP_
 
 #include <pushkin/meta/nth_type.hpp>
+
 #include <tuple>
 
 namespace psst {
 namespace meta {
 
-template < typename ... T >
+template <typename... T>
 struct type_tuple {
-    static constexpr ::std::size_t size = sizeof ... (T);
-    template < ::std::size_t N >
-    using type = typename nth_type<N, T ...>::type;
+    static constexpr ::std::size_t size = sizeof...(T);
+    template <::std::size_t N>
+    using type = typename nth_type<N, T...>::type;
 };
 
 template <>
@@ -26,19 +27,17 @@ struct type_tuple<> {
     static constexpr ::std::size_t size = 0;
 };
 
-template < typename T >
+template <typename T>
 struct to_std_tuple {
-    using type = ::std::tuple< T >;
+    using type = ::std::tuple<T>;
 };
 
-template < typename ... T >
-struct to_std_tuple< type_tuple<T...> > {
-    using type = ::std::tuple< T... >;
+template <typename... T>
+struct to_std_tuple<type_tuple<T...>> {
+    using type = ::std::tuple<T...>;
 };
 
-}  /* namespace meta */
-}  /* namespace pus */
-
-
+} /* namespace meta */
+}    // namespace psst
 
 #endif /* PUSHKIN_META_TYPE_TUPLE_HPP_ */

@@ -9,8 +9,9 @@
 #define PUSHKIN_UTIL_DEMANGLE_HPP_
 
 #include <cxxabi.h>
-#include <string>
+
 #include <iosfwd>
+#include <string>
 
 namespace psst {
 namespace util {
@@ -23,14 +24,15 @@ namespace util {
  * @endcode
  * @return Demangled type name
  */
-template < typename T >
+template <typename T>
 ::std::string
 demangle()
 {
-    int status {0};
-    char* ret = abi::__cxa_demangle( typeid(T).name(), nullptr, nullptr, &status );
+    int           status{0};
+    char*         ret = abi::__cxa_demangle(typeid(T).name(), nullptr, nullptr, &status);
     ::std::string res{ret};
-    if(ret) free(ret);
+    if (ret)
+        free(ret);
     return res;
 }
 
@@ -42,14 +44,14 @@ demangle()
  * @endcode
  * @param os
  */
-template < typename T >
+template <typename T>
 void
 demangle(::std::iostream& os)
 {
     ::std::ostream::sentry s(os);
     if (s) {
-        int status {0};
-        char* ret = abi::__cxa_demangle( typeid(T).name(), nullptr, nullptr, &status );
+        int   status{0};
+        char* ret = abi::__cxa_demangle(typeid(T).name(), nullptr, nullptr, &status);
         if (ret) {
             os << ret;
             free(ret);
@@ -57,8 +59,7 @@ demangle(::std::iostream& os)
     }
 }
 
-}  /* namespace util */
-}  /* namespace psst */
-
+} /* namespace util */
+} /* namespace psst */
 
 #endif /* PUSHKIN_UTIL_DEMANGLE_HPP_ */

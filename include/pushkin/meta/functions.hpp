@@ -31,9 +31,7 @@ all_of(::std::initializer_list<bool> args)
     return true;
 }
 
-}  /* namespace meta */
-}  /* namespace psst */
-
-
+} /* namespace meta */
+} /* namespace psst */
 
 #endif /* PUSHKIN_META_FUNCTIONS_HPP_ */

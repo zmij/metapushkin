@@ -13,31 +13,29 @@
 namespace psst::meta::test {
 
 enum class char_class {
-    none        =   0x00,
-    extended    =   0x01,
-    control     =   0x02,
-    whitespace  =   0x04,
-    punctuation =   0x08,
-    oct_digit   =   0x10,
-    dec_digit   =   0x20,
-    hex_digit   =   0x40,
-    letter      =   0x80,
-    alnum       =   dec_digit | letter,
-    printable   =   whitespace | punctuation | alnum
+    none        = 0x00,
+    extended    = 0x01,
+    control     = 0x02,
+    whitespace  = 0x04,
+    punctuation = 0x08,
+    oct_digit   = 0x10,
+    dec_digit   = 0x20,
+    hex_digit   = 0x40,
+    letter      = 0x80,
+    alnum       = dec_digit | letter,
+    printable   = whitespace | punctuation | alnum
 };
 
 constexpr char_class
-operator | (char_class lhs, char_class rhs)
+operator|(char_class lhs, char_class rhs)
 {
-    return static_cast<char_class>( static_cast<int>(lhs) | static_cast<int>(rhs) );
+    return static_cast<char_class>(static_cast<int>(lhs) | static_cast<int>(rhs));
 }
 
-constexpr char_class
-operator & (char_class lhs, char_class rhs)
+constexpr char_class operator&(char_class lhs, char_class rhs)
 {
-    return static_cast<char_class>( static_cast<int>(lhs) & static_cast<int>(rhs) );
+    return static_cast<char_class>(static_cast<int>(lhs) & static_cast<int>(rhs));
 }
-
 
 constexpr bool
 any(char_class lhs)
@@ -53,6 +51,7 @@ using single_char = char_range<Begin, Begin, Class>;
 /**
  * This is just to test the static range_map class
  */
+// clang-format off
 using ascii_table = range::range_map<
     char, char_class, char_class::extended,
     char_range< 0   , 31    , char_class::control                       >,
@@ -68,6 +67,7 @@ using ascii_table = range::range_map<
     char_range< 'g' , 'z'   , char_class::letter                        >,
     single_char<127         , char_class::control                       >
 >;
+// clang-format on
 
 static constexpr bool
 is_alpha(char c)
@@ -105,8 +105,6 @@ is_punct(char c)
     return ascii_table::get_value(c) == char_class::punctuation;
 }
 
-}  // namespace psst::meta::test
-
-
+}    // namespace psst::meta::test
 
 #endif /* TEST_ASCII_TABLE_HPP_ */

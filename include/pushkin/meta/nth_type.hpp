@@ -13,21 +13,20 @@
 namespace psst {
 namespace meta {
 
-template < ::std::size_t N, typename ... T >
+template <::std::size_t N, typename... T>
 struct nth_type;
 
-template < ::std::size_t N, typename T, typename ... Y >
-struct nth_type< N, T, Y ... > : nth_type < N - 1, Y ... > {
-    static_assert(N <= sizeof ...(Y), "Index type is out of range");
+template <::std::size_t N, typename T, typename... Y>
+struct nth_type<N, T, Y...> : nth_type<N - 1, Y...> {
+    static_assert(N <= sizeof...(Y), "Index type is out of range");
 };
 
-template < typename T, typename ... Y >
-struct nth_type < 0, T, Y ... > {
+template <typename T, typename... Y>
+struct nth_type<0, T, Y...> {
     using type = T;
 };
 
-}  /* namespace meta */
-}  /* namespace pus */
-
+} /* namespace meta */
+}    // namespace psst
 
 #endif /* PUSHKIN_META_NTH_TYPE_HPP_ */
