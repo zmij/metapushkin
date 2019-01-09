@@ -521,53 +521,89 @@ struct any_match<Predicate, type_tuple<T...>> : any_match<Predicate, T...> {};
  * Metafunction to find types satisfying a predicate
  * in a variadic type pack or type tuple.
  */
-template <template <typename> class Predicate, typename... T>
-struct find_if;
-template <template <typename> class Predicate, typename... T>
-using find_if_t = typename find_if<Predicate, T...>::type;
+namespace detail {
 
-template <template <typename> class Predicate>
-struct find_if<Predicate> {
-    using type = type_tuple<>;
+template <template <typename> class Predicate, std::size_t N, typename... T>
+struct find_if_impl;
+
+template <template <typename> class Predicate, std::size_t N>
+struct find_if_impl<Predicate, N> {
+    using type    = type_tuple<>;
+    using indexes = std::index_sequence<>;
 };
 
-template <template <typename> class Predicate, typename T, typename... Y>
-struct find_if<Predicate, T, Y...>
-    : ::std::conditional_t<Predicate<T>::value, combine<T, find_if_t<Predicate, Y...>>,
-                           find_if<Predicate, Y...>> {};
+template <template <typename> class Predicate, std::size_t N, typename T, typename... Y>
+struct find_if_impl<Predicate, N, T, Y...> {
+    using tail = find_if_impl<Predicate, N + 1, Y...>;
 
-template <template <typename> class Predicate, typename T>
-struct find_if<Predicate, T> : ::std::conditional_t<Predicate<T>::value, combine<T>, combine<>> {};
+    using type    = std::conditional_t<Predicate<T>::value, combine_t<T, typename tail::type>,
+                                    typename tail::type>;
+    using indexes = std::conditional_t<Predicate<T>::value,
+                                       join_t<std::index_sequence<N>, typename tail::indexes>,
+                                       typename tail::indexes>;
+};
 
+template <template <typename> class Predicate, std::size_t N, typename T>
+struct find_if_impl<Predicate, N, T> {
+    using type = std::conditional_t<Predicate<T>::value, type_tuple<T>, type_tuple<>>;
+    using indexes
+        = std::conditional_t<Predicate<T>::value, std::index_sequence<N>, std::index_sequence<>>;
+};
+
+template <template <typename> class Predicate, std::size_t N, typename... T>
+struct find_if_impl<Predicate, N, type_tuple<T...>> : find_if_impl<Predicate, N, T...> {};
+
+}    // namespace detail
 template <template <typename> class Predicate, typename... T>
-struct find_if<Predicate, type_tuple<T...>> : find_if<Predicate, T...> {};
+struct find_if : detail::find_if_impl<Predicate, 0, T...> {};
+template <template <typename> class Predicate, typename... T>
+using find_if_t = typename find_if<Predicate, T...>::type;
+template <template <typename> class Predicate, typename... T>
+using find_if_i = typename find_if<Predicate, T...>::indexes;
 //@}
 
 //@{
 /**
  * Metafunction to remove types matching a predicate.
  */
+namespace detail {
+
+template <template <typename> class Predicate, std::size_t N, typename... T>
+struct remove_if_impl;
+
+template <template <typename> class Predicate, std::size_t N>
+struct remove_if_impl<Predicate, N> {
+    using type    = type_tuple<>;
+    using indexes = std::index_sequence<>;
+};
+
+template <template <typename> class Predicate, std::size_t N, typename T, typename... Y>
+struct remove_if_impl<Predicate, N, T, Y...> {
+    using tail = remove_if_impl<Predicate, N + 1, Y...>;
+
+    using type    = std::conditional_t<Predicate<T>::value, typename tail::type,
+                                    combine_t<T, typename tail::type>>;
+    using indexes = std::conditional_t<Predicate<T>::value, typename tail::indexes,
+                                       join_t<std::index_sequence<N>, typename tail::indexes>>;
+};
+
+template <template <typename> class Predicate, std::size_t N, typename T>
+struct remove_if_impl<Predicate, N, T> {
+    using type = std::conditional_t<Predicate<T>::value, type_tuple<>, type_tuple<T>>;
+    using indexes
+        = std::conditional_t<Predicate<T>::value, std::index_sequence<>, std::index_sequence<N>>;
+};
+
+template <template <typename> class Predicate, std::size_t N, typename... T>
+struct remove_if_impl<Predicate, N, type_tuple<T...>> : remove_if_impl<Predicate, N, T...> {};
+}    // namespace detail
+
 template <template <typename> class Predicate, typename... T>
-struct remove_if;
+struct remove_if : detail::remove_if_impl<Predicate, 0, T...> {};
 template <template <typename> class Predicate, typename... T>
 using remove_if_t = typename remove_if<Predicate, T...>::type;
-
-template <template <typename> class Predicate>
-struct remove_if<Predicate> {
-    using type = type_tuple<>;
-};
-
-template <template <typename> class Predicate, typename T, typename... Y>
-struct remove_if<Predicate, T, Y...>
-    : ::std::conditional_t<Predicate<T>::value, remove_if<Predicate, Y...>,
-                           combine<T, remove_if_t<Predicate, Y...>>> {};
-
-template <template <typename> class Predicate, typename T>
-struct remove_if<Predicate, T> : ::std::conditional_t<Predicate<T>::value, combine<>, combine<T>> {
-};
-
 template <template <typename> class Predicate, typename... T>
-struct remove_if<Predicate, type_tuple<T...>> : remove_if<Predicate, T...> {};
+using remove_if_i = typename remove_if<Predicate, T...>::indexes;
 //@}
 
 //@{
@@ -699,5 +735,11 @@ struct stable_sort<Compare> {
 
 } /* namespace meta */
 }    // namespace psst
+
+#ifdef __METASHELL
+
+using namespace psst::meta;
+
+#endif /* __METASHELL */
 
 #endif /* PUSHKIN_META_ALGORITHM_HPP_ */
