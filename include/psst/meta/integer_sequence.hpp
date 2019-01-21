@@ -5,8 +5,8 @@
  *      Author: zmij
  */
 
-#ifndef PUSHKIN_META_INTEGER_SEQUENCE_HPP_
-#define PUSHKIN_META_INTEGER_SEQUENCE_HPP_
+#ifndef PSST_META_INTEGER_SEQUENCE_HPP_
+#define PSST_META_INTEGER_SEQUENCE_HPP_
 
 #include <type_traits>
 #include <utility>
@@ -158,4 +158,4 @@ struct min : std::integral_constant<T, (A < B ? A : B)> {};
 } /* namespace meta */
 } /* namespace psst */
 
-#endif /* PUSHKIN_META_INTEGER_SEQUENCE_HPP_ */
+#endif /* PSST_META_INTEGER_SEQUENCE_HPP_ */

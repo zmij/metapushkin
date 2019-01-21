@@ -9,12 +9,11 @@
  * @page Metaprogramming algorithms
  *
  */
-#ifndef PUSHKIN_META_ALGORITHM_HPP_
-#define PUSHKIN_META_ALGORITHM_HPP_
+#ifndef PSST_META_ALGORITHM_HPP_
+#define PSST_META_ALGORITHM_HPP_
 
-#include <pushkin/meta/integer_sequence.hpp>
-#include <pushkin/meta/type_tuple.hpp>
-
+#include <psst/meta/integer_sequence.hpp>
+#include <psst/meta/type_tuple.hpp>
 #include <limits>
 #include <type_traits>
 
@@ -742,4 +741,4 @@ using namespace psst::meta;
 
 #endif /* __METASHELL */
 
-#endif /* PUSHKIN_META_ALGORITHM_HPP_ */
+#endif /* PSST_META_ALGORITHM_HPP_ */

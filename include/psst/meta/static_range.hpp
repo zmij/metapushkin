@@ -5,12 +5,11 @@
  *      Author: ser-fedorov
  */
 
-#ifndef PUSHKIN_META_STATIC_RANGE_HPP_
-#define PUSHKIN_META_STATIC_RANGE_HPP_
+#ifndef PSST_META_STATIC_RANGE_HPP_
+#define PSST_META_STATIC_RANGE_HPP_
 
-#include <pushkin/meta/algorithm.hpp>
-#include <pushkin/meta/sequence_to_aray.hpp>
-
+#include <psst/meta/algorithm.hpp>
+#include <psst/meta/sequence_to_aray.hpp>
 #include <limits>
 
 namespace psst::meta::range {
@@ -864,4 +863,4 @@ struct range_map {
 
 }    // namespace psst::meta::range
 
-#endif /* PUSHKIN_META_STATIC_RANGE_HPP_ */
+#endif /* PSST_META_STATIC_RANGE_HPP_ */

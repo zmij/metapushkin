@@ -5,10 +5,10 @@
  *      Author: zmij
  */
 
-#ifndef PUSHKIN_META_CHAR_SEQUENCE_HPP_
-#define PUSHKIN_META_CHAR_SEQUENCE_HPP_
+#ifndef PSST_META_CHAR_SEQUENCE_HPP_
+#define PSST_META_CHAR_SEQUENCE_HPP_
 
-#include <pushkin/meta/integer_sequence.hpp>
+#include <psst/meta/integer_sequence.hpp>
 
 namespace psst {
 namespace meta {
@@ -489,4 +489,4 @@ using make_char_literal_s =
 #    include <metashell/scalar.hpp>
 #endif
 
-#endif /* PUSHKIN_META_CHAR_SEQUENCE_HPP_ */
+#endif /* PSST_META_CHAR_SEQUENCE_HPP_ */

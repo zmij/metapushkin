@@ -5,11 +5,10 @@
  *      Author: sergey.fedorov
  */
 
-#ifndef PUSHKIN_META_CALLABLE_HPP_
-#define PUSHKIN_META_CALLABLE_HPP_
+#ifndef PSST_META_CALLABLE_HPP_
+#define PSST_META_CALLABLE_HPP_
 
-#include <pushkin/meta/index_tuple.hpp>
-
+#include <psst/meta/index_tuple.hpp>
 #include <tuple>
 #include <type_traits>
 
@@ -115,4 +114,4 @@ struct or_<> {
 } /* namespace meta */
 }    // namespace psst
 
-#endif /* PUSHKIN_META_CALLABLE_HPP_ */
+#endif /* PSST_META_CALLABLE_HPP_ */

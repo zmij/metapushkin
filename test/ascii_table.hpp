@@ -8,7 +8,7 @@
 #ifndef TEST_ASCII_TABLE_HPP_
 #define TEST_ASCII_TABLE_HPP_
 
-#include <pushkin/meta/static_range.hpp>
+#include <psst/meta/static_range.hpp>
 
 namespace psst::meta::test {
 

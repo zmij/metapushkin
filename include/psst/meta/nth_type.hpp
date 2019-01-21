@@ -5,8 +5,8 @@
  *      Author: sergey.fedorov
  */
 
-#ifndef PUSHKIN_META_NTH_TYPE_HPP_
-#define PUSHKIN_META_NTH_TYPE_HPP_
+#ifndef PSST_META_NTH_TYPE_HPP_
+#define PSST_META_NTH_TYPE_HPP_
 
 #include <cstdint>
 
@@ -29,4 +29,4 @@ struct nth_type<0, T, Y...> {
 } /* namespace meta */
 }    // namespace psst
 
-#endif /* PUSHKIN_META_NTH_TYPE_HPP_ */
+#endif /* PSST_META_NTH_TYPE_HPP_ */

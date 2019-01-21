@@ -8,8 +8,7 @@
 #ifndef PSST_META_FUNCTION_TRAITS_HPP_
 #define PSST_META_FUNCTION_TRAITS_HPP_
 
-#include <pushkin/meta/index_tuple.hpp>
-
+#include <psst/meta/index_tuple.hpp>
 #include <tuple>
 
 namespace psst {

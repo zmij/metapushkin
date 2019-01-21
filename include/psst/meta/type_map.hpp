@@ -5,10 +5,10 @@
  *      Author: zmij
  */
 
-#ifndef PUSHKIN_META_TYPE_MAP_HPP_
-#define PUSHKIN_META_TYPE_MAP_HPP_
+#ifndef PSST_META_TYPE_MAP_HPP_
+#define PSST_META_TYPE_MAP_HPP_
 
-#include <pushkin/meta/algorithm.hpp>
+#include <psst/meta/algorithm.hpp>
 
 namespace psst {
 namespace meta {
@@ -80,4 +80,4 @@ struct type_map<type_tuple<>, type_tuple<>> : type_map<> {};
 } /* namespace meta */
 } /* namespace psst */
 
-#endif /* PUSHKIN_META_TYPE_MAP_HPP_ */
+#endif /* PSST_META_TYPE_MAP_HPP_ */

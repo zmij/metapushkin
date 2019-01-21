@@ -5,8 +5,8 @@
  *      Author: ser-fedorov
  */
 
-#ifndef PUSHKIN_META_SEQUENCE_TO_ARAY_HPP_
-#define PUSHKIN_META_SEQUENCE_TO_ARAY_HPP_
+#ifndef PSST_META_SEQUENCE_TO_ARAY_HPP_
+#define PSST_META_SEQUENCE_TO_ARAY_HPP_
 
 #include <array>
 #include <utility>
@@ -22,4 +22,4 @@ sequence_to_array(std::integer_sequence<T, Values...>)
 
 }    // namespace psst::meta
 
-#endif /* PUSHKIN_META_SEQUENCE_TO_ARAY_HPP_ */
+#endif /* PSST_META_SEQUENCE_TO_ARAY_HPP_ */

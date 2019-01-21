@@ -5,9 +5,8 @@
  *      Author: zmij
  */
 
-#include <pushkin/meta.hpp>
-
 #include <gtest/gtest.h>
+#include <psst/meta.hpp>
 
 namespace psst {
 namespace meta {

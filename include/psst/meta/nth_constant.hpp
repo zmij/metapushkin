@@ -6,8 +6,8 @@
  *      Author: ser-fedorov
  */
 
-#ifndef PUSHKIN_META_NTH_CONSTANT_HPP_
-#define PUSHKIN_META_NTH_CONSTANT_HPP_
+#ifndef PSST_META_NTH_CONSTANT_HPP_
+#define PSST_META_NTH_CONSTANT_HPP_
 
 #include <utility>
 
@@ -33,4 +33,4 @@ struct nth_constant<N, std::integer_sequence<T, V, Values...>>
 }    // namespace meta
 }    // namespace psst
 
-#endif /* PUSHKIN_META_NTH_CONSTANT_HPP_ */
+#endif /* PSST_META_NTH_CONSTANT_HPP_ */

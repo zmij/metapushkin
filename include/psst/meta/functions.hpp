@@ -5,8 +5,8 @@
  *      Author: zmij
  */
 
-#ifndef PUSHKIN_META_FUNCTIONS_HPP_
-#define PUSHKIN_META_FUNCTIONS_HPP_
+#ifndef PSST_META_FUNCTIONS_HPP_
+#define PSST_META_FUNCTIONS_HPP_
 
 namespace psst {
 namespace meta {
@@ -34,4 +34,4 @@ all_of(::std::initializer_list<bool> args)
 } /* namespace meta */
 } /* namespace psst */
 
-#endif /* PUSHKIN_META_FUNCTIONS_HPP_ */
+#endif /* PSST_META_FUNCTIONS_HPP_ */

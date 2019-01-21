@@ -5,8 +5,8 @@
  *      Author: sergey.fedorov
  */
 
-#ifndef PUSHKIN_META_INDEX_TUPLE_HPP_
-#define PUSHKIN_META_INDEX_TUPLE_HPP_
+#ifndef PSST_META_INDEX_TUPLE_HPP_
+#define PSST_META_INDEX_TUPLE_HPP_
 
 #include <cstdint>
 
@@ -36,4 +36,4 @@ struct index_builder<0, indexes_tuple<Indexes...>> {
 } /* namespace meta */
 }    // namespace psst
 
-#endif /* PUSHKIN_META_INDEX_TUPLE_HPP_ */
+#endif /* PSST_META_INDEX_TUPLE_HPP_ */

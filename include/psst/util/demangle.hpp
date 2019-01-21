@@ -5,8 +5,8 @@
  *      Author: zmij
  */
 
-#ifndef PUSHKIN_UTIL_DEMANGLE_HPP_
-#define PUSHKIN_UTIL_DEMANGLE_HPP_
+#ifndef PSST_UTIL_DEMANGLE_HPP_
+#define PSST_UTIL_DEMANGLE_HPP_
 
 #include <cxxabi.h>
 
@@ -62,4 +62,4 @@ demangle(::std::iostream& os)
 } /* namespace util */
 } /* namespace psst */
 
-#endif /* PUSHKIN_UTIL_DEMANGLE_HPP_ */
+#endif /* PSST_UTIL_DEMANGLE_HPP_ */

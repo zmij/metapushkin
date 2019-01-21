@@ -5,8 +5,8 @@
  *      Author: ser-fedorov
  */
 
-#ifndef PUSHKIN_META_MIN_MAX_HPP_
-#define PUSHKIN_META_MIN_MAX_HPP_
+#ifndef PSST_META_MIN_MAX_HPP_
+#define PSST_META_MIN_MAX_HPP_
 
 #include <type_traits>
 
@@ -42,4 +42,4 @@ struct max_value<T, A, V...> : max_value<T, A, max_value<T, V...>::value> {};
 
 }    // namespace psst::meta
 
-#endif /* PUSHKIN_META_MIN_MAX_HPP_ */
+#endif /* PSST_META_MIN_MAX_HPP_ */
